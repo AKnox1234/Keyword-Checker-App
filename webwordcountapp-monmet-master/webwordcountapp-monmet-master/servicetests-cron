@@ -1,0 +1,1 @@
+*/10 * * * * /usr/local/bin/php /var/www/html/insertlogfrontend.php; /usr/local/bin/php /var/www/html/insertlogwordcount.php; /usr/local/bin/php /var/www/html/insertlogcheck.php; /usr/local/bin/php /var/www/html/insertlogkeywordcount.php; /usr/local/bin/php /var/www/html/insertlogproxy.php; >> /var/www/html/cron.log 2>&1

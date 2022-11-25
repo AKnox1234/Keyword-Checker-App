@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>WebWordCount</title>
+
+<script type="text/javascript">
+
+let result = 0;
+let paragraph = '';
+let word = '';
+let service = '';
+
+let proxyURL1 = "http://proxy.40206885.qpc.hal.davecutting.uk/";
+let proxyURL2 = "http://proxy2.40206885.qpc.hal.davecutting.uk/";
+
+
+
+function DisplayWordCount() {
+
+document.getElementById('display-1').value = result;
+
+}
+
+function Display()
+{
+    if (result == 1)
+        result = 'Keyword exists!';
+    else
+        result = 'Keyword does not exist!';
+    document.getElementById('display-2').value = result;
+
+}
+
+function DisplayKeywordCount() {
+
+    document.getElementById('display-3').value = result;
+
+}
+
+function WordCount() {
+
+paragraph = document.getElementById('paragraph').value.toLowerCase();
+word = document.getElementById('word').value.toLowerCase();
+service = 'wordcount';
+
+if (paragraph == '' || word == '') {
+        
+        alert("Error! - No Input Detected in Paragraph and/or Keyword field(s)");
+
+    } else if (word.includes(" ")){
+
+        alert("Error! - More Than One Word Detected!");
+
+    } else if (/[^a-zA-Z\-\/]./.test(word)) {
+
+        alert("Error! - Special Characters and/or Numbers Detected");
+
+    } else {
+
+
+let xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var j = JSON.parse(this.response);
+            result = j.answer;
+            DisplayWordCount();
+        }
+    };
+
+    if (xhttp.status == 200) {
+    xhttp.open("GET",proxyURL1+"?paragraph="+paragraph+"&service="+service);
+    xhttp.send();
+    } else {
+    xhttp.open("GET",proxyURL2+"?paragraph="+paragraph+"&service="+service);
+    xhttp.send();
+    }
+    
+    return;
+}
+
+}
+
+function Check()
+{
+    paragraph = document.getElementById('paragraph').value.toLowerCase();
+    word = document.getElementById('word').value.toLowerCase();
+    service = 'check';
+   
+    
+    if (paragraph == '' || word == '') {
+        
+        alert("Error! - No Input Detected in Paragraph and/or Keyword field(s)");
+
+    } else if (word.includes(" ")){
+
+        alert("Error! - More Than One Word Detected!");
+
+    } else if (/[^a-zA-Z\-\/]./.test(word)) {
+
+        alert("Error! - Special Characters and/or Numbers Detected");
+
+    } 
+    else
+    {
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                var j = JSON.parse(this.response);
+                result = j.answer;
+                Display();
+            }
+        };
+
+       
+        if (xhttp.status == 200) {
+        xhttp.open("GET",proxyURL1+"?paragraph="+paragraph+"&word="+word+"&service="+service);
+        xhttp.send();
+        } else {
+        xhttp.open("GET",proxyURL2+"?paragraph="+paragraph+"&word="+word+"&service="+service);
+        xhttp.send();
+        }
+   
+        
+        return;
+    }
+}
+
+function KeywordCount() {
+
+    paragraph = document.getElementById('paragraph').value.toLowerCase();
+    word = document.getElementById('word').value.toLowerCase();
+    service = 'keywordcount';
+
+    if (paragraph == '' || word == '') {
+        
+        alert("Error! - No Input Detected in Paragraph and/or Keyword field(s)");
+
+    } else if (word.includes(" ")){
+
+        alert("Error! - More Than One Word Detected!");
+
+    } else if (/[^a-zA-Z\-\/]./.test(word)) {
+
+        alert("Error! - Special Characters and/or Numbers Detected");
+
+    } else {
+
+    let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                var j = JSON.parse(this.response);
+                result = j.answer;
+                DisplayKeywordCount();
+            }
+        };
+
+        if (xhttp.status == 200) {
+        xhttp.open("GET",proxyURL1+"?paragraph="+paragraph+"&word="+word+"&service="+service);
+        xhttp.send();
+        } else {
+        xhttp.open("GET",proxyURL2+"?paragraph="+paragraph+"&word="+word+"&service="+service);
+        xhttp.send();
+        }
+        
+        return;
+}
+
+}
+
+function Clear()
+{
+    document.getElementById('paragraph').value = '';
+    document.getElementById('word').value = '';
+    document.getElementById('display-1').value = '';
+    document.getElementById('display-2').value = '';
+    document.getElementById('display-3').value = '';
+
+}
+
+</script>
+
+<style type="text/css">
+body  {
+    font-size: 150%;
+    font-family: monospace;
+}
+
+#logo
+{
+    font-family: Calibri, sans-serif;
+    font-weight: lighter;
+    color: #505050;
+    margin: 0.5em;
+}
+
+#wordcount
+{
+    text-align: center;
+    margin-top: 1em;
+}
+
+#paragraph {
+    font-size: 90%;
+    padding: 0.2em;
+    margin: 0.2em;
+    font-family: monospace;
+    letter-spacing: 0.1em;
+    border: 1px solid black;
+    
+}
+
+#word {
+    font-size: 90%;
+    border: 1px solid black;
+    padding: 0.2em;
+    margin: 0.2em;
+    font-family: monospace;
+    letter-spacing: 0.1em;
+    width: 400px;
+    
+}
+
+.display {
+    font-size: 90%;
+    color: white;
+    background-color: black;
+    padding: 0.2em;
+    margin: 0.2em;
+    font-family: monospace;
+    letter-spacing: 0.1em;
+    width: 400px;
+    
+}
+
+.wwcbutton {
+    background-color: green;
+    color: white;
+    padding: 0px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+    margin: 4px 2px;
+    cursor: pointer;
+    height: 40px;
+    width: 400px;
+}
+
+.wwcbutton-inactive {
+    background-color: gray;
+    color: white;
+    padding: 0px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+    margin: 4px 2px;
+    cursor: pointer;
+    height: 40px;
+    width: 400px;
+}
+
+.wwcbutton-clear {
+    background-color: red;
+    color: white;
+    padding: 0px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+    margin: 4px 2px;
+    cursor: pointer;
+    height: 40px;
+    width: 400px;
+}
+
+</style>
+
+</head>
+<body>
+<div id="wordcount">
+    <div id="logo">
+        Web Word Count App
+    </div>
+    <div>
+        <textarea id="paragraph" rows="5" cols="35" placeholder="Enter the paragraph here..." value=""></textarea>
+    </div>
+    <div>
+        <input type="text" id="word" placeholder="Enter the keyword here..." value="">
+    </div>
+    <div>
+        <input type="text" class="display" id="display-1" readonly=1 placeholder="Total word count = 0 " value=""><br>
+        <input type="text" class="display" id="display-2" readonly=1 placeholder="Please Enter Keyword" value=""><br>
+        <input type="text" class="display" id="display-3" readonly=1 placeholder="Total keyword appearances = 0" value="">
+    </div>
+    <div>
+        <button class="wwcbutton" onclick="WordCount();">Total words?</button>
+    </div>
+    <div>
+        <button class="wwcbutton" onclick="Check();">Check keyword appearance</button>
+    </div>
+    <div>
+        <button class="wwcbutton" onclick="KeywordCount();">Total keyword appearances?</button>
+    </div>
+    <div>
+        <button class="wwcbutton-clear" onclick="Clear();">Clear</button>
+    </div>
+    
+</div>
+</body>
+
+<script type="text/javascript">
+</script>
+
+</html>

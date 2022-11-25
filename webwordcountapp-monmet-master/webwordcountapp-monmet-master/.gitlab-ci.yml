@@ -1,0 +1,6 @@
+image : php:7.2-apache
+
+test:
+    stage: test
+    script:
+        - php src/testing/httptest.php
